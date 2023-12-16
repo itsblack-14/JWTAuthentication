@@ -14,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+//Load Config Data 
+AuthConst.LoadConfigData();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -44,8 +48,10 @@ builder.Services.AddSwaggerGen(options =>
                     });
 });
 
+//builder.Services.AddDbContext<AuthContext>(options =>
+//                            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<AuthContext>(options =>
-                            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                              options.UseSqlServer(AuthConst.DB_CONNECTION));
 
 builder.Services.AddScoped<IAuth, AuthRepository>();
 builder.Services.AddScoped<IRoleAuthorizationService, RoleAuthenticationService>();
@@ -56,15 +62,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         {
                             ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
+                            //IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
+                            //                builder.Configuration.GetSection("AppSettings:SecrectKey").Value)),
                             IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                                            builder.Configuration.GetSection("AppSettings:SecrectKey").Value)),
+                                               AuthConst.TOKEN_SECRECT)),
                             ValidateIssuer = true,
+                            //ValidIssuer = builder.Configuration.GetSection("AppSettings:Issuer").Value,
+                            ValidIssuer = AuthConst.TOKEN_ISSUER,
                             ValidateAudience = false,
-                            ValidIssuer = builder.Configuration.GetSection("AppSettings:Issuer").Value,
                         };
                     });
-
-AuthConst.LoadConfigData();
 
 var app = builder.Build();
 

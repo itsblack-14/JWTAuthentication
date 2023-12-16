@@ -8,6 +8,11 @@ namespace JWTAuthentication.Const
         public static readonly string PARAM_MODULE_NAME = PARAM_APPLICATION + ".moduleName";
         public static readonly string PARAM_ACTION_NAME = PARAM_APPLICATION + ".actionName";
 
+        public static string DB_CONNECTION;
+
+        public static string TOKEN_SECRECT;
+        public static string TOKEN_ISSUER;
+
         public static string MODULE_NAME_USERACCOUNT;
 
         public static string ACTION_NAME_VIEW;
@@ -19,6 +24,11 @@ namespace JWTAuthentication.Const
             var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config\\appsetting.config");
             var xml = System.Xml.Linq.XElement.Load(filePath);
             var xmlRetriever = new XMLRetriever(xml);
+
+            DB_CONNECTION = xmlRetriever.GetParameter(PARAM_APPLICATION + ".dbConnection");
+
+            TOKEN_SECRECT = xmlRetriever.GetParameter(PARAM_APPLICATION + ".tokenSecrect");
+            TOKEN_ISSUER = xmlRetriever.GetParameter(PARAM_APPLICATION + ".tokenIssuer");
 
             MODULE_NAME_USERACCOUNT = xmlRetriever.GetParameter(PARAM_MODULE_NAME + ".userAccount");
 
