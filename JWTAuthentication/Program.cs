@@ -2,6 +2,7 @@ using JWTAuthentication.Const;
 using JWTAuthentication.Context;
 using JWTAuthentication.Interfaces.Repos;
 using JWTAuthentication.Interfaces.Services;
+using JWTAuthentication.Middleware;
 using JWTAuthentication.Repos;
 using JWTAuthentication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -74,6 +75,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     });
 
 var app = builder.Build();
+
+//Swagger Login
+app.UseSwaggerAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
