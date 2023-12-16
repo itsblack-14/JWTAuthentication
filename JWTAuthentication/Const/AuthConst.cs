@@ -5,9 +5,17 @@ namespace JWTAuthentication.Const
     public class AuthConst
     {
         public static readonly string PARAM_APPLICATION = "Auth";
+        public static readonly string PARAM_MODULE_NAME = PARAM_APPLICATION + ".moduleName";
+        public static readonly string PARAM_ACTION_NAME = PARAM_APPLICATION + ".actionName";
 
         public static int BUYER_USERTYPE_ID;
         public static int SELLER_USERTYPE_ID;
+
+        public static string MODULE_NAME_USERACCOUNT;
+
+        public static string ACTION_NAME_VIEW;
+        public static string ACTION_NAME_ADD_OR_EDIT;
+        public static string ACTION_NAME_DELETE;
 
         public static void LoadConfigData()
         {
@@ -17,6 +25,12 @@ namespace JWTAuthentication.Const
 
             BUYER_USERTYPE_ID = int.Parse(xmlRetriever.GetParameter(PARAM_APPLICATION+ ".userTypeBuyer"));
             SELLER_USERTYPE_ID = int.Parse(xmlRetriever.GetParameter(PARAM_APPLICATION+ ".userTypeSeller"));
+
+            MODULE_NAME_USERACCOUNT = xmlRetriever.GetParameter(PARAM_MODULE_NAME + ".userAccount");
+
+            ACTION_NAME_VIEW = xmlRetriever.GetParameter(PARAM_ACTION_NAME + ".view");
+            ACTION_NAME_ADD_OR_EDIT = xmlRetriever.GetParameter(PARAM_ACTION_NAME + ".addOrEdit");
+            ACTION_NAME_DELETE = xmlRetriever.GetParameter(PARAM_ACTION_NAME + ".delete");
         }
     }
 }

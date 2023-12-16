@@ -1,10 +1,12 @@
-﻿using JWTAuthentication.Dtos.AuthDto;
+﻿using JWTAuthentication.Const;
+using JWTAuthentication.Dtos.AuthDto;
 using JWTAuthentication.Helpers;
-using JWTAuthentication.Interfaces;
+using JWTAuthentication.Interfaces.Repos;
 using JWTAuthentication.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace JWTAuthentication.Controllers
 {
@@ -13,9 +15,9 @@ namespace JWTAuthentication.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuth _repo;
-        private readonly IAuthService _services;
+        private readonly IRoleAuthorizationService _services;
 
-        public AuthController(IAuth repo,IAuthService services)
+        public AuthController(IAuth repo,IRoleAuthorizationService services)
         {
             _repo = repo;
             _services = services;
@@ -55,9 +57,10 @@ namespace JWTAuthentication.Controllers
         {
             try
             {
-                var isSeller = _services.IsSeller(User);
-
-                if(!isSeller)
+                //Authorization
+                var roleId = int.Parse(User.FindFirst(ClaimTypes.Role).Value);
+                bool isAuthorize = await _services.IsAuthorized(roleId, AuthConst.MODULE_NAME_USERACCOUNT, AuthConst.ACTION_NAME_VIEW);
+                if (!isAuthorize)
                 {
                     return Unauthorized();
                 }

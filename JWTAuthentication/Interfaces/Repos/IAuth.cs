@@ -1,7 +1,7 @@
 ﻿using JWTAuthentication.Dtos;
 using JWTAuthentication.Dtos.AuthDto;
 
-namespace JWTAuthentication.Interfaces
+namespace JWTAuthentication.Interfaces.Repos
 {
     public interface IAuth
     {

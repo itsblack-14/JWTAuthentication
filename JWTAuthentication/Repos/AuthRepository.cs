@@ -1,6 +1,6 @@
 ﻿using JWTAuthentication.Context;
 using JWTAuthentication.Dtos.AuthDto;
-using JWTAuthentication.Interfaces;
+using JWTAuthentication.Interfaces.Repos;
 using JWTAuthentication.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -182,7 +182,7 @@ namespace JWTAuthentication.Repos
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Role, user.UserTypeId.ToString()),
+                new Claim(ClaimTypes.Role, user.RoleId.ToString()),
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(

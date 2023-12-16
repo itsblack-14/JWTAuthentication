@@ -1,9 +1,9 @@
 using JWTAuthentication.Const;
 using JWTAuthentication.Context;
-using JWTAuthentication.Helpers;
-using JWTAuthentication.Interfaces;
+using JWTAuthentication.Interfaces.Repos;
 using JWTAuthentication.Interfaces.Services;
 using JWTAuthentication.Repos;
+using JWTAuthentication.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -48,7 +48,7 @@ builder.Services.AddDbContext<AuthContext>(options =>
                             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IAuth, AuthRepository>();
-builder.Services.AddScoped<IAuthService, AuthServices>();
+builder.Services.AddScoped<IRoleAuthorizationService, RoleAuthenticationService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options => {

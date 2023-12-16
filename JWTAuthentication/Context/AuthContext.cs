@@ -14,7 +14,7 @@ namespace JWTAuthentication.Context
         }
 
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserType> UserType { get; set; }
+        //public virtual DbSet<UserType> UserType { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<AuthenticationSetting> AuthenticationSetting { get; set; }
         public virtual DbSet<RoleAuthentication> RoleAuthentication { get; set; }
